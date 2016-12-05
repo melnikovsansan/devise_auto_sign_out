@@ -1,10 +1,8 @@
 # DeviseAutoSignOut
-
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/devise_auto_sign_out`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Auto logout using js after Devise session expired
 
 ## Installation
+
 
 Add this line to your application's Gemfile:
 
@@ -15,15 +13,48 @@ gem 'devise_auto_sign_out'
 And then execute:
 
     $ bundle
+    
+Add the following to your `app/assets/javascripts/application.js`:
 
-Or install it yourself as:
+```js
+//= require devise_auto_sign_out
+```
 
-    $ gem install devise_auto_sign_out
+Add module `DeviceAutoSignOut::SessionControllerExtension` to `SessionController`
+
+```ruby
+class SessionsController < Devise::SessionsController
+  include DeviceAutoSignOut::SessionControllerExtension
+end
+```
+
+Add route to `config/routes.rb`:
+
+```ruby
+devise_scope :user do
+  get 'account/active', to: 'sessions#active'
+end
+```
+
+Add time out devise module to `ActiveRecord` model `app\models\user.rb\`: 
+
+```ruby
+devise :timeoutable, timeout_in: 15.minutes
+```
 
 ## Usage
 
-TODO: Write usage instructions here
+It will be used with default settings: 
 
+```js
+DeviceAutoSignOut = {
+  interval: 6000,
+  signInPath: '/account/sign_in',
+  activePath: '/account/active'
+};
+```
+
+Rewrite this settings if need in your js config files.
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
