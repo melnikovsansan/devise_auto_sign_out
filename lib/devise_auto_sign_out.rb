@@ -1,6 +1,7 @@
 require 'devise_auto_sign_out/version'
 require 'rails'
 require 'devise_auto_sign_out/action_controller_extension'
+require 'devise_auto_sign_out/check_session'
 require 'devise_auto_sign_out/session_controller_extension'
 
 module DeviseAutoSignOut

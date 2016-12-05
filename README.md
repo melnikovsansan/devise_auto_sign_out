@@ -36,7 +36,7 @@ devise_scope :user do
 end
 ```
 
-Add time out devise module to `ActiveRecord` model `app\models\user.rb\`: 
+Add timeout devise module to `ActiveRecord` model `app\models\user.rb\`: 
 
 ```ruby
 devise :timeoutable, timeout_in: 15.minutes
@@ -47,8 +47,8 @@ devise :timeoutable, timeout_in: 15.minutes
 It will be used with default settings: 
 
 ```js
-DeviceAutoSignOut = {
-  interval: 6000,
+DeviseAutoSignOut = {
+  interval: 60000,
   signInPath: '/account/sign_in',
   activePath: '/account/active'
 };
